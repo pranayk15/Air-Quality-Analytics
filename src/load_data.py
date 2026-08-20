@@ -117,40 +117,50 @@ def collect_data():
     # -----------------------------------
 
     insert_query = """
-        INSERT INTO air_quality (
-            city_id,
-            timestamp,
-            us_aqi,
-            pm10,
-            pm2_5,
-            carbon_monoxide,
-            nitrogen_dioxide,
-            sulphur_dioxide,
-            ozone,
-            temperature,
-            humidity,
-            wind_speed,
-            surface_pressure
-        )
-        VALUES (
-            %s, %s, %s, %s, %s,
-            %s, %s, %s, %s, %s,
-            %s, %s, %s, %s
-        )
-        ON CONFLICT (city_id, timestamp)
-        DO UPDATE SET
-            us_aqi = EXCLUDED.us_aqi,
-            pm10 = EXCLUDED.pm10,
-            pm2_5 = EXCLUDED.pm2_5,
-            carbon_monoxide = EXCLUDED.carbon_monoxide,
-            nitrogen_dioxide = EXCLUDED.nitrogen_dioxide,
-            sulphur_dioxide = EXCLUDED.sulphur_dioxide,
-            ozone = EXCLUDED.ozone,
-            temperature = EXCLUDED.temperature,
-            humidity = EXCLUDED.humidity,
-            wind_speed = EXCLUDED.wind_speed,
-            surface_pressure = EXCLUDED.surface_pressure
-    """
+    INSERT INTO air_quality (
+        city_id,
+        timestamp,
+        us_aqi,
+        pm10,
+        pm2_5,
+        carbon_monoxide,
+        nitrogen_dioxide,
+        sulphur_dioxide,
+        ozone,
+        temperature,
+        humidity,
+        wind_speed,
+        surface_pressure
+    )
+    VALUES (
+        %(city_id)s,
+        %(timestamp)s,
+        %(us_aqi)s,
+        %(pm10)s,
+        %(pm2_5)s,
+        %(carbon_monoxide)s,
+        %(nitrogen_dioxide)s,
+        %(sulphur_dioxide)s,
+        %(ozone)s,
+        %(temperature)s,
+        %(humidity)s,
+        %(wind_speed)s,
+        %(surface_pressure)s
+    )
+    ON CONFLICT (city_id, timestamp)
+    DO UPDATE SET
+        us_aqi = EXCLUDED.us_aqi,
+        pm10 = EXCLUDED.pm10,
+        pm2_5 = EXCLUDED.pm2_5,
+        carbon_monoxide = EXCLUDED.carbon_monoxide,
+        nitrogen_dioxide = EXCLUDED.nitrogen_dioxide,
+        sulphur_dioxide = EXCLUDED.sulphur_dioxide,
+        ozone = EXCLUDED.ozone,
+        temperature = EXCLUDED.temperature,
+        humidity = EXCLUDED.humidity,
+        wind_speed = EXCLUDED.wind_speed,
+        surface_pressure = EXCLUDED.surface_pressure;
+"""
 
     try:
 
@@ -188,21 +198,21 @@ def collect_data():
 
             city_id = result[0]
 
-            values = (
-                city_id,
-                air_data["time"],
-                air_data["us_aqi"],
-                air_data["pm10"],
-                air_data["pm2_5"],
-                air_data["carbon_monoxide"],
-                air_data["nitrogen_dioxide"],
-                air_data["sulphur_dioxide"],
-                air_data["ozone"],
-                weather_data["temperature_2m"],
-                weather_data["relative_humidity_2m"],
-                weather_data["wind_speed_10m"],
-                weather_data["surface_pressure"]
-            )
+            values = {
+                "city_id": city_id,
+                "timestamp": air_data["time"],
+                "us_aqi": air_data["us_aqi"],
+                "pm10": air_data["pm10"],
+                "pm2_5": air_data["pm2_5"],
+                "carbon_monoxide": air_data["carbon_monoxide"],
+                "nitrogen_dioxide": air_data["nitrogen_dioxide"],
+                "sulphur_dioxide": air_data["sulphur_dioxide"],
+                "ozone": air_data["ozone"],
+                "temperature": weather_data["temperature_2m"],
+                "humidity": weather_data["relative_humidity_2m"],
+                "wind_speed": weather_data["wind_speed_10m"],
+                "surface_pressure": weather_data["surface_pressure"]
+            }
 
             cursor.execute(
                 insert_query,
