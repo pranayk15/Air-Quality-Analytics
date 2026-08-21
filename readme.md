@@ -141,6 +141,7 @@ The dashboard currently monitors the following Indian cities:
 ## ⚙️ Automation
 
 GitHub Actions automatically runs the Python data collection pipeline on a scheduled basis and stores the collected observations in the cloud PostgreSQL database.
+```mermaid
 sequenceDiagram
     participant G as GitHub Actions
     participant P as Python
@@ -152,3 +153,69 @@ sequenceDiagram
     A-->>P: Return data
     P->>DB: Insert / update records
     DB-->>P: Confirm transaction
+```
+
+---
+
+## 📁 Project Structure
+
+```
+AQI-DASHBOARD/
+│
+├── .github/
+│   └── workflows/
+│       └── collect_data.yml
+│
+├── src/
+│   ├── database.py
+│   ├── load_data.py
+│   └── test_database.py
+│
+├── sql/
+│   └── analytics.sql
+│
+├── requirements.txt
+├── .gitignore
+└── README.md
+```
+
+---
+
+## 🔧 Setup
+
+# 1. Clone the Repository
+```
+git clone YOUR_REPOSITORY_URL
+cd AQI-DASHBOARD
+```
+
+# 2. Create a Virtual Environment
+```
+python -m venv venv
+```
+
+# 3. Install Dependencies
+```
+pip install -r requirements.txt
+```
+
+# 4. Configure Environment Variables
+```
+DB_HOST=your_database_host
+DB_NAME=your_database_name
+DB_USER=your_database_user
+DB_PASSWORD=your_database_password
+DB_PORT=5432
+```
+
+# 5. Run the Data Pipeline
+```
+python src/load_data.py
+```
+
+---
+
+## 👨‍💻 Author
+
+Pranay Kale
+Data Analytics | Python | SQL | Power BI
