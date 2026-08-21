@@ -77,3 +77,78 @@ flowchart TD
 
 ---
 
+## 🔄 Data Flow
+
+```text
+Open-Meteo APIs
+      ↓
+Python Data Collection
+      ↓
+Data Processing & Validation
+      ↓
+Supabase PostgreSQL
+      ↓
+SQL Analytical Views
+      ↓
+Power BI
+      ↓
+Interactive Analytics Dashboard
+```
+
+---
+
+## 📊 Dashboard Pages
+
+- AQI Overview – AQI KPIs, city ranking, map, and current pollution levels.
+- Historical Trends – AQI, PM2.5, PM10, and time-based trends.
+- City Comparison – Compare pollution levels and rank cities.
+- Weather & Pollution – Analyze relationships between AQI, PM2.5, wind speed, humidity, and temperature.
+
+---
+
+## 🛠️ Tech Stack
+
+| Category        | Tools                |
+| --------------- | -------------------- |
+| Language        | Python               |
+| Data Analysis   | Pandas, NumPy        |
+| Data Collection | REST APIs, Requests  |
+| Database        | PostgreSQL, Supabase |
+| Analytics       | SQL, DAX             |
+| Visualization   | Power BI             |
+| Automation      | GitHub Actions       |
+| Version Control | Git, GitHub          |
+
+---
+
+## 🌆 Cities Covered
+
+The dashboard currently monitors the following Indian cities:
+
+- Delhi
+- Mumbai
+- Bengaluru
+- Chennai
+- Kolkata
+- Hyderabad
+- Pune
+- Ahmedabad
+- Bhopal
+- Indore
+
+---
+
+## ⚙️ Automation
+
+GitHub Actions automatically runs the Python data collection pipeline on a scheduled basis and stores the collected observations in the cloud PostgreSQL database.
+sequenceDiagram
+    participant G as GitHub Actions
+    participant P as Python
+    participant A as Open-Meteo
+    participant DB as PostgreSQL
+
+    G->>P: Run scheduled pipeline
+    P->>A: Request AQI & weather data
+    A-->>P: Return data
+    P->>DB: Insert / update records
+    DB-->>P: Confirm transaction
