@@ -218,4 +218,5 @@ python src/load_data.py
 ## 👨‍💻 Author
 
 Pranay Kale
+
 Data Analytics | Python | SQL | Power BI
